@@ -1,16 +1,29 @@
-export const App = () => {
+import { Routes, Route } from "react-router-dom";
+import HomePages from "pages/HomePages/HomePages";
+import { SharedLayout } from "./SharedLayout/SharedLayout";
+
+
+import { lazy } from "react";
+const Reviews = lazy(() => import('./Reviews/Reviews'))
+const Movies = lazy(() => import('pages/Movies/Movies'))
+const Cast = lazy(() => import('./Cast/Cast'))
+const MovieList = lazy(() => import('pages/MovieList/MovieList'));
+
+
+const App = () => {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+      
+    <Routes>
+      <Route path="/" element={<SharedLayout />}>
+        <Route index path="/home" element={<HomePages />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/movies/:id" element={<MovieList />}>
+          <Route path="/movies/:id/cast" element={<Cast />} />
+          <Route path="/movies/:id/reviews" element={<Reviews/>}/>
+        </Route>
+         </Route>
+   </Routes>
+ 
   );
 };
+export default App;
